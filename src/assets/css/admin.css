@@ -1,0 +1,378 @@
+/* ========================================
+   PANEL DE ADMINISTRACIÓN - E.P. MARTINELLI
+   ======================================== */
+
+/* --- Login Page --- */
+.admin-login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f2f5;
+  padding: 20px;
+}
+
+.admin-login-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.admin-login-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.admin-login-header img {
+  max-height: 60px;
+  margin-bottom: 15px;
+}
+
+.admin-login-header h4 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #0e2048;
+}
+
+/* --- Layout --- */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f0f2f5;
+}
+
+/* --- Sidebar --- */
+.admin-sidebar {
+  width: 250px;
+  background: #0e2048;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 100;
+  overflow-y: auto;
+}
+
+.admin-sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+}
+
+.admin-sidebar-header h5 {
+  color: #fff;
+  font-weight: 600;
+  margin: 0;
+  font-size: 18px;
+}
+
+.admin-sidebar-nav {
+  flex: 1;
+  padding: 10px 0;
+}
+
+.admin-sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-sidebar-nav li a {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  transition: all 0.2s;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.admin-sidebar-nav li a:hover,
+.admin-sidebar-nav li.active a {
+  color: #fff;
+  background: rgba(66, 182, 245, 0.15);
+  border-left: 3px solid #42b6f5;
+}
+
+.admin-sidebar-nav li a i {
+  font-size: 18px;
+  width: 20px;
+  text-align: center;
+}
+
+.admin-sidebar-footer {
+  padding: 15px 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.admin-user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-user-info i {
+  font-size: 28px;
+  color: rgba(255,255,255,0.6);
+}
+
+.admin-user-info strong {
+  display: block;
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.admin-user-info small {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+}
+
+/* --- Main Content --- */
+.admin-main {
+  flex: 1;
+  margin-left: 250px;
+  padding: 30px;
+  min-height: 100vh;
+}
+
+/* --- Cards --- */
+.admin-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.admin-card-header {
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.admin-card-body {
+  padding: 20px;
+}
+
+.admin-card-warning {
+  border-left: 4px solid #ffc107;
+}
+
+.admin-card-danger {
+  border-left: 4px solid #dc3545;
+}
+
+/* --- Tables --- */
+.admin-table-responsive {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th {
+  text-align: left;
+  padding: 12px 15px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #666;
+  background: #f8f9fa;
+  border-bottom: 2px solid #eee;
+  white-space: nowrap;
+}
+
+.admin-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.admin-table tbody tr:hover {
+  background: #f8f9ff;
+}
+
+.admin-table td code {
+  font-size: 12px;
+  background: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+/* --- Stock Badges --- */
+.stock-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.stock-badge.stock-ok {
+  background: #d4edda;
+  color: #155724;
+}
+
+.stock-badge.stock-low {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.stock-badge.stock-out {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* --- Stock Alerts --- */
+.stock-alert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.stock-alert:last-child {
+  margin-bottom: 0;
+}
+
+.stock-alert.stock-low {
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+}
+
+.stock-alert.stock-out {
+  background: #f8d7da;
+  border: 1px solid #dc3545;
+}
+
+.stock-alert-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.stock-alert-info {
+  flex: 1;
+}
+
+.stock-alert-info strong {
+  display: block;
+  font-size: 14px;
+}
+
+.stock-alert-info span {
+  font-size: 12px;
+  color: #666;
+}
+
+/* --- Loading --- */
+.admin-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #f0f2f5;
+}
+
+/* --- Responsive --- */
+@media (max-width: 991px) {
+  .admin-sidebar {
+    width: 60px;
+  }
+
+  .admin-sidebar-header h5,
+  .admin-sidebar-nav li a span,
+  .admin-user-info div,
+  .admin-sidebar-footer .btn span {
+    display: none;
+  }
+
+  .admin-sidebar-nav li a {
+    justify-content: center;
+    padding: 14px;
+    border-left: none;
+  }
+
+  .admin-sidebar-nav li a i {
+    font-size: 20px;
+    margin: 0;
+  }
+
+  .admin-sidebar-nav li.active a {
+    border-left: none;
+    border-bottom: 3px solid #42b6f5;
+  }
+
+  .admin-main {
+    margin-left: 60px;
+    padding: 20px;
+  }
+
+  .admin-user-info {
+    justify-content: center;
+  }
+
+  .admin-user-info i {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 767px) {
+  .admin-sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .admin-sidebar-header {
+    display: none;
+  }
+
+  .admin-sidebar-nav {
+    flex: 1;
+    padding: 0;
+  }
+
+  .admin-sidebar-nav ul {
+    display: flex;
+    overflow-x: auto;
+  }
+
+  .admin-sidebar-nav li a {
+    padding: 12px 15px;
+    white-space: nowrap;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+    font-size: 13px;
+  }
+
+  .admin-sidebar-nav li a span {
+    display: inline;
+    font-size: 12px;
+  }
+
+  .admin-sidebar-nav li.active a {
+    border-left: none;
+    border-bottom-color: #42b6f5;
+  }
+
+  .admin-main {
+    margin-left: 0;
+    padding: 15px;
+  }
+
+  .admin-sidebar-footer {
+    display: none;
+  }
+}

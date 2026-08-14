@@ -64,6 +64,11 @@ const Header = () => {
                               <Link to={link.href}>{link.label}</Link>
                             </li>
                           ))}
+                          <li>
+                            <Link to="/admin" style={{ color: '#42b6f5', fontWeight: 600 }}>
+                              <i className="bi bi-shield-lock"></i> Admin
+                            </Link>
+                          </li>
                         </ul>
                       </nav>
                     </div>
@@ -99,6 +104,15 @@ const Header = () => {
                                 </Link>
                               </li>
                             ))}
+                            <li style={{ padding: '8px 0', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                              <Link
+                                to="/admin"
+                                style={{ color: '#42b6f5', textDecoration: 'none', fontWeight: 600 }}
+                                onClick={() => setMobileOpen(false)}
+                              >
+                                <i className="bi bi-shield-lock"></i> Admin
+                              </Link>
+                            </li>
                           </ul>
                         </nav>
                       )}
