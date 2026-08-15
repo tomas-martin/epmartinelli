@@ -1,10 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SERVICES, PRODUCTS, FAQ, GALLERY_IMAGES } from '../data/siteData';
 
 const Home = () => {
   const [openFaq, setOpenFaq] = useState<string>('faq1');
   const [galleryIndex, setGalleryIndex] = useState(0);
+  const [galleryAutoplay, setGalleryAutoplay] = useState(true);
+  const touchStartX = useRef(0);
+
+  const goNext = () => setGalleryIndex((i) => (i + 1) % GALLERY_IMAGES.length);
+  const goPrev = () => setGalleryIndex((i) => (i - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length);
+
+  useEffect(() => {
+    if (!galleryAutoplay) return;
+    const id = setInterval(goNext, 4500);
+    return () => clearInterval(id);
+  }, [galleryAutoplay]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const diff = e.changedTouches[0].clientX - touchStartX.current;
+    if (diff > 50) goPrev();
+    else if (diff < -50) goNext();
+  };
 
   return (
     <div>
@@ -229,63 +250,54 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="banner-area">
-          <div className="container-fluid p-0">
-            <div className="row no-gutters">
-              <div className="col-lg-12">
-                {/* Galería simple con navegación */}
-                <div style={{ position: 'relative', overflow: 'hidden' }}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      transition: 'transform 0.4s ease',
-                      transform: `translateX(-${galleryIndex * 100}%)`,
-                    }}
-                  >
-                    {GALLERY_IMAGES.map((img, i) => (
-                      <div
-                        key={i}
-                        style={{ minWidth: '100%', height: 400, overflow: 'hidden' }}
-                      >
-                        <img
-                          src={img}
-                          alt={`Trabajo ${i + 1}`}
-                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                  {/* Botones de navegación */}
-                  <button
-                    onClick={() => setGalleryIndex((galleryIndex - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length)}
-                    style={navBtnStyle('left')}
-                    aria-label="Anterior"
-                  >
-                    ‹
-                  </button>
-                  <button
-                    onClick={() => setGalleryIndex((galleryIndex + 1) % GALLERY_IMAGES.length)}
-                    style={navBtnStyle('right')}
-                    aria-label="Siguiente"
-                  >
-                    ›
-                  </button>
-                  {/* Dots */}
-                  <div style={{ position: 'absolute', bottom: 16, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 8 }}>
-                    {GALLERY_IMAGES.map((_, i) => (
-                      <button
-                        key={i}
-                        onClick={() => setGalleryIndex(i)}
-                        style={{
-                          width: 10, height: 10, borderRadius: '50%', border: 'none',
-                          background: i === galleryIndex ? '#42b6f5' : 'rgba(255,255,255,0.6)',
-                          cursor: 'pointer', padding: 0,
-                        }}
-                        aria-label={`Imagen ${i + 1}`}
-                      />
-                    ))}
-                  </div>
+          <div className="row">
+            <div className="col-lg-10 ml-auto mr-auto">
+              <div
+                className="gallery-carousel"
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+                onMouseEnter={() => setGalleryAutoplay(false)}
+                onMouseLeave={() => setGalleryAutoplay(true)}
+              >
+                <div
+                  className="gallery-carousel-track"
+                  style={{ transform: `translateX(-${galleryIndex * 100}%)` }}
+                >
+                  {GALLERY_IMAGES.map((img, i) => (
+                    <div className="gallery-carousel-slide" key={i}>
+                      <img src={img} alt={`Trabajo ${i + 1}`} />
+                    </div>
+                  ))}
+                </div>
+
+                <button
+                  className="gallery-arrow gallery-arrow-prev"
+                  onClick={goPrev}
+                  aria-label="Anterior"
+                >
+                  ‹
+                </button>
+                <button
+                  className="gallery-arrow gallery-arrow-next"
+                  onClick={goNext}
+                  aria-label="Siguiente"
+                >
+                  ›
+                </button>
+
+                <div className="gallery-counter">
+                  {galleryIndex + 1} / {GALLERY_IMAGES.length}
+                </div>
+
+                <div className="gallery-dots">
+                  {GALLERY_IMAGES.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setGalleryIndex(i)}
+                      className={i === galleryIndex ? 'active' : ''}
+                      aria-label={`Imagen ${i + 1}`}
+                    />
+                  ))}
                 </div>
               </div>
             </div>
@@ -295,24 +307,5 @@ const Home = () => {
     </div>
   );
 };
-
-const navBtnStyle = (side: 'left' | 'right'): React.CSSProperties => ({
-  position: 'absolute',
-  top: '50%',
-  [side]: 16,
-  transform: 'translateY(-50%)',
-  background: 'rgba(66,182,245,0.85)',
-  border: 'none',
-  color: '#fff',
-  fontSize: 32,
-  width: 44,
-  height: 44,
-  borderRadius: '50%',
-  cursor: 'pointer',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  lineHeight: 1,
-});
 
 export default Home;
