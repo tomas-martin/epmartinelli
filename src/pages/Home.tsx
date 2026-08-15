@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { COMPANY, SERVICES, PRODUCTS, FAQ, GALLERY_IMAGES } from '../data/siteData';
+import { SERVICES, PRODUCTS, FAQ, GALLERY_IMAGES } from '../data/siteData';
 
 const Home = () => {
   const [openFaq, setOpenFaq] = useState<string>('faq1');
@@ -285,97 +285,6 @@ const Home = () => {
                         aria-label={`Imagen ${i + 1}`}
                       />
                     ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    {/* Contacto */}
-      <div className="contact-us-area section-ptb bg-light-grey" id="contacto">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-8 ml-auto mr-auto">
-              <div className="section-title">
-                <h4>CONTACTO</h4>
-                <h2>Contactanos y <span>conversemos</span></h2>
-                <p>
-                  Escribinos por WhatsApp, llamanos o mandanos un mail y te respondemos a la
-                  brevedad.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="row mt--50">
-            <div className="col-lg-6">
-              <div className="contact-info-wrap">
-                <div className="single-contact-info">
-                  <div className="contact-icon">
-                    <i className="bi bi-map" />
-                  </div>
-                  <div className="contact-info-dec">
-                    <h3>Ubicación</h3>
-                    <p>{COMPANY.location}</p>
-                  </div>
-                </div>
-                <div className="single-contact-info">
-                  <div className="contact-icon">
-                    <i className="bi bi-whatsapp" />
-                  </div>
-                  <div className="contact-info-dec">
-                    <h3>WhatsApp / Teléfono</h3>
-                    <p>
-                      <a
-                        href={`https://wa.me/${COMPANY.phone}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {COMPANY.phone}
-                      </a>
-                    </p>
-                  </div>
-                </div>
-                <div className="single-contact-info">
-                  <div className="contact-icon">
-                    <i className="bi bi-envelop" />
-                  </div>
-                  <div className="contact-info-dec">
-                    <h3>Email</h3>
-                    <p>
-                      <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-6">
-              <div className="contact-info-wrap">
-                <div className="single-contact-info">
-                  <div className="contact-icon">
-                    <i className="bi bi-clock" />
-                  </div>
-                  <div className="contact-info-dec">
-                    <h3>Horarios</h3>
-                    <p>Lunes a Viernes de 8:00 a 17:00 hs</p>
-                  </div>
-                </div>
-                <div className="single-contact-info">
-                  <div className="contact-icon">
-                    <i className="bi bi-send" />
-                  </div>
-                  <div className="contact-info-dec">
-                    <h3>Escribinos directo</h3>
-                    <p>
-                      <a
-                        href={`https://wa.me/${COMPANY.phone}?text=${encodeURIComponent('Hola, quiero hacer una consulta sobre balanzas y básculas.')}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Abrir conversación de WhatsApp
-                      </a>
-                    </p>
                   </div>
                 </div>
               </div>
