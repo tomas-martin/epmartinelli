@@ -170,6 +170,27 @@
   .logo-area {
     position: static !important;
   }
+  .header-bottom-wrap .col-6 {
+    display: flex;
+    align-items: center;
+  }
+  .logo-area-movil {
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+  .logo-area-movil img {
+    max-height: 52px;
+    width: auto;
+  }
+  .header-right-wrap {
+    height: auto;
+  }
+  .mobile-menu {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
 }
 
 .mobile-menu-toggle {

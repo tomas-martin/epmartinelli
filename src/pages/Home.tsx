@@ -2,14 +2,16 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SERVICES, PRODUCTS, FAQ, GALLERY_IMAGES } from '../data/siteData';
 
+const GALLERY_LOOP = [...GALLERY_IMAGES, ...GALLERY_IMAGES, ...GALLERY_IMAGES];
+
 const Home = () => {
   const [openFaq, setOpenFaq] = useState<string>('faq1');
-  const [galleryIndex, setGalleryIndex] = useState(0);
+  const [galleryIndex, setGalleryIndex] = useState(GALLERY_IMAGES.length);
   const [galleryAutoplay, setGalleryAutoplay] = useState(true);
   const touchStartX = useRef(0);
 
-  const goNext = () => setGalleryIndex((i) => (i + 1) % GALLERY_IMAGES.length);
-  const goPrev = () => setGalleryIndex((i) => (i - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length);
+  const goNext = () => setGalleryIndex((i) => (i + 1) % GALLERY_LOOP.length);
+  const goPrev = () => setGalleryIndex((i) => (i - 1 + GALLERY_LOOP.length) % GALLERY_LOOP.length);
 
   useEffect(() => {
     if (!galleryAutoplay) return;
@@ -265,7 +267,7 @@ const Home = () => {
                 >
                   <div className="slick-list draggable">
                     <div className="slick-track">
-                      {GALLERY_IMAGES.map((img, i) => (
+                      {GALLERY_LOOP.map((img, i) => (
                         <div
                           key={i}
                           className={`item slick-slide${i === galleryIndex ? ' slick-current slick-active slick-center' : ''}`}
@@ -301,8 +303,8 @@ const Home = () => {
                     {GALLERY_IMAGES.map((_, i) => (
                       <button
                         key={i}
-                        onClick={() => setGalleryIndex(i)}
-                        className={i === galleryIndex ? 'active' : ''}
+                        onClick={() => setGalleryIndex(i + GALLERY_IMAGES.length)}
+                        className={galleryIndex % GALLERY_IMAGES.length === i ? 'active' : ''}
                         aria-label={`Imagen ${i + 1}`}
                       />
                     ))}
