@@ -3406,6 +3406,12 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 
 /* customized */
+#nosotros,
+#servicios,
+#productos,
+#contacto {
+  scroll-margin-top: 90px;
+}
 /*
 .container {
   width: 95%;

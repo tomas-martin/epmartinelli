@@ -8,9 +8,10 @@ export const COMPANY = {
 } as const;
 
 export const NAV_LINKS = [
-  { label: 'Nosotros',        href: '#nosotros' },
-  { label: 'Nuestros Servicios', href: '#servicios' },
+  { label: 'Nosotros',        href: '/#nosotros' },
+  { label: 'Nuestros Servicios', href: '/#servicios' },
   { label: 'Productos',       href: '/productos' },
+  { label: 'Contacto',        href: '/#contacto' },
 ] as const;
 
 export interface Service {
@@ -121,7 +122,7 @@ export const PRODUCTS: Product[] = [
     items: ['Asesoramiento personalizado', 'Venta y reparación', 'Servicio técnico'],
     highlight: true,
     cta: 'Consultar ahora',
-    href: '/contacto',
+    href: '/#contacto',
   },
 ];
 

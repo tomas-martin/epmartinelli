@@ -42,7 +42,7 @@ const Productos = () => (
                       <li key={item}>{item}</li>
                     ))}
                   </ul>
-                  <Link to="/contacto" className="default-btn">
+                  <Link to="/#contacto" className="default-btn">
                     {product.highlight ? 'Contactanos' : 'Consultar'}
                   </Link>
                 </div>
@@ -71,7 +71,7 @@ const Productos = () => (
                   También podemos evaluar el estado de tus equipos actuales y recomendarte
                   la mejor alternativa según tu proceso productivo.
                 </p>
-                <Link to="/contacto" className="default-btn" style={{ marginTop: 16 }}>
+                <Link to="/#contacto" className="default-btn" style={{ marginTop: 16 }}>
                   Consultar ahora
                 </Link>
               </div>

@@ -6,6 +6,11 @@ const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
 
+  const isActive = (href: string) => {
+    if (href.startsWith('/#')) return location.pathname === '/';
+    return location.pathname === href;
+  };
+
   return (
     <header className="header-area inner-header">
       {/* Top bar */}
@@ -59,7 +64,7 @@ const Header = () => {
                           {NAV_LINKS.map((link) => (
                             <li
                               key={link.href}
-                              className={location.pathname === link.href ? 'active' : ''}
+                              className={isActive(link.href) ? 'active' : ''}
                             >
                               <Link to={link.href}>{link.label}</Link>
                             </li>

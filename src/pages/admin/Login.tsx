@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react';
+import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const Login = () => {
@@ -9,8 +10,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   if (user && profile) {
-    window.location.href = '/admin';
-    return null;
+    return <Navigate to="/admin" replace />;
   }
 
   const handleSubmit = async (e: FormEvent) => {

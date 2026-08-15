@@ -1,10 +1,31 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { SERVICES, PRODUCTS, FAQ, GALLERY_IMAGES } from '../data/siteData';
+import { COMPANY, SERVICES, PRODUCTS, FAQ, GALLERY_IMAGES } from '../data/siteData';
 
 const Home = () => {
   const [openFaq, setOpenFaq] = useState<string>('faq1');
   const [galleryIndex, setGalleryIndex] = useState(0);
+  const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
+  const [contactStatus, setContactStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+
+  const handleContactChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setContactForm({ ...contactForm, [e.target.name]: e.target.value });
+  };
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setContactStatus('sending');
+    try {
+      const res = await fetch('http://www.epmartinelli.com.ar/mail.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(contactForm),
+      });
+      setContactStatus(res.ok ? 'success' : 'error');
+    } catch {
+      setContactStatus('error');
+    }
+  };
 
   return (
     <div>
@@ -37,8 +58,8 @@ const Home = () => {
                   </h3>
                   <h2 className="text-white">Estamos en la industria</h2>
                   <div className="slider-button">
-                    <a href="#about" className="default-btn">Nosotros</a>
-                    <Link to="/contacto" className="primary-btn">Contacto</Link>
+                    <a href="#nosotros" className="default-btn">Nosotros</a>
+                    <a href="#contacto" className="primary-btn">Contacto</a>
                   </div>
                 </div>
               </div>
@@ -48,7 +69,7 @@ const Home = () => {
       </div>
 
       {/* Quiénes somos */}
-      <div className="about-us-area section-ptb bg-light-grey" id="about">
+      <div className="about-us-area section-ptb bg-light-grey" id="nosotros">
         <div className="container">
           <div className="row align-items-center">
             <div className="col-lg-6">
@@ -78,9 +99,9 @@ const Home = () => {
                   donde la atención personalizada, la calidad de los servicios brindados y el
                   compromiso con nuestros clientes nos hagan ser un referente en el sector.
                 </p>
-                <Link to="/nosotros" className="default-btn" style={{ marginTop: 16 }}>
+                <a href="#servicios" className="default-btn" style={{ marginTop: 16 }}>
                   Conocenos más
-                </Link>
+                </a>
               </div>
             </div>
             <div className="col-lg-6">
@@ -93,7 +114,7 @@ const Home = () => {
       </div>
 
       {/* Servicios */}
-      <div className="provide-area section-ptb" id="services">
+      <div className="provide-area section-ptb" id="servicios">
         <div className="container">
           <div className="row">
             <div className="col-lg-7 ml-auto mr-auto">
@@ -110,7 +131,7 @@ const Home = () => {
                     <img src={service.image} alt={service.title} />
                   </div>
                   <h5 className="provide-title">
-                    <Link to="/servicios">{service.title}</Link>
+                    {service.title}
                   </h5>
                   <div className="provide-contets">
                     <p>{service.description}</p>
@@ -285,6 +306,138 @@ const Home = () => {
                         aria-label={`Imagen ${i + 1}`}
                       />
                     ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {/* Contacto */}
+      <div className="contact-us-area section-ptb bg-light-grey" id="contacto">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-8 ml-auto mr-auto">
+              <div className="section-title">
+                <h4>CONTACTO</h4>
+                <h2>Contactanos y <span>conversemos</span></h2>
+                <p>
+                  Completá el formulario y nos comunicamos a la brevedad. También podés
+                  escribirnos por WhatsApp o llamarnos directamente.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="row mt--50">
+            <div className="col-lg-7">
+              <div className="contact-form-warp">
+                <form onSubmit={handleContactSubmit}>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="input-box">
+                        <input
+                          type="text"
+                          name="name"
+                          placeholder="Nombre Completo *"
+                          value={contactForm.name}
+                          onChange={handleContactChange}
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="input-box">
+                        <input
+                          type="email"
+                          name="email"
+                          placeholder="Email *"
+                          value={contactForm.email}
+                          onChange={handleContactChange}
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="input-box">
+                        <textarea
+                          name="message"
+                          placeholder="Mensaje... *"
+                          value={contactForm.message}
+                          onChange={handleContactChange}
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="contact-submit-btn">
+                    <button type="submit" className="default-btn" disabled={contactStatus === 'sending'}>
+                      {contactStatus === 'sending' ? 'Enviando...' : 'Enviar Mensaje'}
+                    </button>
+                    {contactStatus === 'success' && (
+                      <p className="form-messege" style={{ color: '#10c45c', marginTop: 10 }}>
+                        ✓ Mensaje enviado correctamente. ¡Gracias!
+                      </p>
+                    )}
+                    {contactStatus === 'error' && (
+                      <p className="form-messege" style={{ color: '#e74c3c', marginTop: 10 }}>
+                        Hubo un error al enviar. Escribinos directamente a{' '}
+                        <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>.
+                      </p>
+                    )}
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div className="col-lg-5">
+              <div className="contact-info-wrap">
+                <div className="single-contact-info">
+                  <div className="contact-icon">
+                    <i className="bi bi-map" />
+                  </div>
+                  <div className="contact-info-dec">
+                    <h3>Ubicación</h3>
+                    <p>{COMPANY.location}</p>
+                  </div>
+                </div>
+                <div className="single-contact-info">
+                  <div className="contact-icon">
+                    <i className="bi bi-phone" />
+                  </div>
+                  <div className="contact-info-dec">
+                    <h3>Teléfono</h3>
+                    <p>
+                      <a href={`tel:${COMPANY.phone}`}>{COMPANY.phone}</a>
+                    </p>
+                  </div>
+                </div>
+                <div className="single-contact-info">
+                  <div className="contact-icon">
+                    <i className="bi bi-envelop" />
+                  </div>
+                  <div className="contact-info-dec">
+                    <h3>Email</h3>
+                    <p>
+                      <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>
+                    </p>
+                  </div>
+                </div>
+                <div className="single-contact-info">
+                  <div className="contact-icon">
+                    <i className="bi bi-whatsapp" />
+                  </div>
+                  <div className="contact-info-dec">
+                    <h3>WhatsApp</h3>
+                    <p>
+                      <a
+                        href={`https://wa.me/${COMPANY.phone}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {COMPANY.phone}
+                      </a>
+                    </p>
                   </div>
                 </div>
               </div>

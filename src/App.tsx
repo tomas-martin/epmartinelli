@@ -15,8 +15,17 @@ import Stock from './pages/admin/Stock';
 import History from './pages/admin/History';
 
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
-  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (hash) {
+      const el = document.getElementById(hash.replace('#', ''));
+      if (el) {
+        setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 50);
+        return;
+      }
+    }
+    window.scrollTo(0, 0);
+  }, [pathname, hash]);
   return null;
 };
 

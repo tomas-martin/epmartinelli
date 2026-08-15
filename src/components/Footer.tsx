@@ -33,7 +33,7 @@ const Footer = () => {
                     <ul className="footer-list">
                       {SERVICES.map((s) => (
                         <li key={s.title}>
-                          <Link to="/servicios">{s.title}</Link>
+                          <Link to="/#servicios">{s.title}</Link>
                         </li>
                       ))}
                     </ul>
@@ -103,9 +103,9 @@ const Footer = () => {
                 </div>
                 <div className="col-lg-4 col-md-6 col-12">
                   <div className="footer-bottom-admin text-end">
-                    <a href="/admin" className="btn btn-sm mt-3">
+                    <Link to="/admin" className="btn btn-sm mt-3">
                       <i className="bi bi-shield-check" style={{ color: '#42b6f5' }} /> Panel Admin
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
