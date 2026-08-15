@@ -54,6 +54,11 @@ const Footer = () => {
                       <li>
                         <a href={`tel:${COMPANY.phone}`}>{COMPANY.phone}</a>
                       </li>
+                      <li>
+                        <a href="https://wa.me/${COMPANY.phone}" target="_blank" rel="noopener noreferrer">
+                          <i className="bi bi-whatsapp" style={{ color: '#25D366' }} />
+                        </a>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -97,6 +102,12 @@ const Footer = () => {
                   </div>
                 </div>
               </div>
+            </div>
+
+            <div className="admin-footer-btn">
+              <a href="/admin" className="btn btn-sm btn-outline-secondary mt-3">
+                <i className="bi bi-shield-check"></i> Panel Admin
+              </a>
             </div>
 
           </div>
