@@ -94,21 +94,24 @@ const Footer = () => {
 
             <div className="footer-bottom">
               <div className="row">
-                <div className="col-lg-12">
+                <div className="col-lg-8 col-md-6 col-12">
                   <div className="footer-bottom-inner text-center">
                     <p>
                       Copyright &copy; {year} <a href="#">{COMPANY.copyright}</a>. Todos los derechos reservados.
                     </p>
                   </div>
                 </div>
+                <div className="col-lg-4 col-md-6 col-12">
+                  <div className="footer-bottom-admin text-end">
+                    <a href="/admin" className="btn btn-sm mt-3">
+                      <i className="bi bi-shield-check" style={{ color: '#42b6f5' }} /> Panel Admin
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="admin-footer-btn">
-              <a href="/admin" className="btn btn-sm btn-outline-secondary mt-3">
-                <i className="bi bi-shield-check"></i> Panel Admin
-              </a>
-            </div>
+            {/* Admin button now inside footer-bottom, removed separate div */}
 
           </div>
         </div>

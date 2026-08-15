@@ -64,11 +64,6 @@ const Header = () => {
                               <Link to={link.href}>{link.label}</Link>
                             </li>
                           ))}
-                          <li>
-                            <Link to="/admin" style={{ color: '#42b6f5', fontWeight: 600 }}>
-                              <i className="bi bi-shield-lock"></i> Admin
-                            </Link>
-                          </li>
                         </ul>
                       </nav>
                     </div>
@@ -86,36 +81,21 @@ const Header = () => {
                         <span style={{ display: 'block', width: 25, height: 2, background: '#fff', margin: '5px 0' }} />
                       </button>
                       {mobileOpen && (
-                        <nav
-                          style={{
-                            position: 'absolute', top: '100%', left: 0, right: 0,
-                            background: '#031b38', zIndex: 999, padding: '16px',
-                          }}
-                        >
-                          <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-                            {NAV_LINKS.map((link) => (
-                              <li key={link.href} style={{ padding: '8px 0', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                                <Link
-                                  to={link.href}
-                                  style={{ color: '#fff', textDecoration: 'none' }}
-                                  onClick={() => setMobileOpen(false)}
-                                >
-                                  {link.label}
-                                </Link>
-                              </li>
-                            ))}
-                            <li style={{ padding: '8px 0', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                        <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+                          {NAV_LINKS.map((link) => (
+                            <li key={link.href} style={{ padding: '8px 0', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
                               <Link
-                                to="/admin"
-                                style={{ color: '#42b6f5', textDecoration: 'none', fontWeight: 600 }}
+                                to={link.href}
+                                style={{ color: '#fff', textDecoration: 'none' }}
                                 onClick={() => setMobileOpen(false)}
                               >
-                                <i className="bi bi-shield-lock"></i> Admin
+                                {link.label}
                               </Link>
                             </li>
-                          </ul>
-                        </nav>
-                      )}
+                          ))}
+                        </ul>
+                      </nav>
+                    )}
                     </div>
                   </div>
                 </div>

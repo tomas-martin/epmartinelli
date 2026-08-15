@@ -37,7 +37,7 @@ const AdminSidebar = () => {
             <small>{profile?.role === 'owner' ? 'Dueño' : 'Empleado'}</small>
           </div>
         </div>
-        <button className="btn btn-sm btn-outline-light w-100 mt-2" onClick={signOut}>
+        <button className="btn btn-sm btn w-100 mt-2" onClick={signOut} style={{ background: 'transparent', borderColor: '#42b6f5', color: '#42b6f5' }}>
           <i className="bi bi-box-arrow-right"></i> Cerrar sesión
         </button>
       </div>
