@@ -53,7 +53,17 @@ ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE products ENABLE ROW LEVEL SECURITY;
 ALTER TABLE stock_movements ENABLE ROW LEVEL SECURITY;
 
--- ============================================================
+-- Función helper para evitar recursión infinita en RLS
+CREATE OR REPLACE FUNCTION public.current_user_role()
+RETURNS TEXT
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT role FROM public.profiles WHERE id = auth.uid()
+$$;
+
 -- POLÍTICAS PARA PROFILES
 -- ============================================================
 
@@ -61,7 +71,7 @@ ALTER TABLE stock_movements ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Owner can read all profiles"
   ON profiles FOR SELECT
   USING (
-    (SELECT role FROM profiles WHERE id = auth.uid()) = 'owner'
+    public.current_user_role() = 'owner'
   );
 
 -- Empleado: puede leer su propio perfil
@@ -73,19 +83,19 @@ CREATE POLICY "Employee can read own profile"
 CREATE POLICY "Owner can insert profiles"
   ON profiles FOR INSERT
   WITH CHECK (
-    (SELECT role FROM profiles WHERE id = auth.uid()) = 'owner'
+    public.current_user_role() = 'owner'
   );
 
 CREATE POLICY "Owner can update profiles"
   ON profiles FOR UPDATE
   USING (
-    (SELECT role FROM profiles WHERE id = auth.uid()) = 'owner'
+    public.current_user_role() = 'owner'
   );
 
 CREATE POLICY "Owner can delete profiles"
   ON profiles FOR DELETE
   USING (
-    (SELECT role FROM profiles WHERE id = auth.uid()) = 'owner'
+    public.current_user_role() = 'owner'
   );
 
 -- Permitir al trigger de auth insertar el perfil propio durante el registro
@@ -106,19 +116,19 @@ CREATE POLICY "Authenticated users can read products"
 CREATE POLICY "Owner can insert products"
   ON products FOR INSERT
   WITH CHECK (
-    (SELECT role FROM profiles WHERE id = auth.uid()) = 'owner'
+    public.current_user_role() = 'owner'
   );
 
 CREATE POLICY "Owner can update products"
   ON products FOR UPDATE
   USING (
-    (SELECT role FROM profiles WHERE id = auth.uid()) = 'owner'
+    public.current_user_role() = 'owner'
   );
 
 CREATE POLICY "Owner can delete products"
   ON products FOR DELETE
   USING (
-    (SELECT role FROM profiles WHERE id = auth.uid()) = 'owner'
+    public.current_user_role() = 'owner'
   );
 
 -- ============================================================
@@ -129,7 +139,7 @@ CREATE POLICY "Owner can delete products"
 CREATE POLICY "Owner can read all movements"
   ON stock_movements FOR SELECT
   USING (
-    (SELECT role FROM profiles WHERE id = auth.uid()) = 'owner'
+    public.current_user_role() = 'owner'
   );
 
 -- Empleado: puede leer sus propios movimientos
@@ -152,8 +162,8 @@ BEGIN
   INSERT INTO public.profiles (id, username, display_name, role)
   VALUES (
     NEW.id,
-    NEW.raw_user_meta_data->>'username',
-    NEW.raw_user_meta_data->>'display_name',
+    COALESCE(NEW.raw_user_meta_data->>'username', split_part(NEW.email, '@', 1)),
+    COALESCE(NEW.raw_user_meta_data->>'display_name', split_part(NEW.email, '@', 1)),
     COALESCE(NEW.raw_user_meta_data->>'role', 'employee')
   );
   RETURN NEW;
