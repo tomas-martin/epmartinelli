@@ -8,10 +8,9 @@ export const COMPANY = {
 } as const;
 
 export const NAV_LINKS = [
-  { label: 'Nosotros',        href: '/nosotros' },
-  { label: 'Nuestros Servicios', href: '/servicios' },
+  { label: 'Nosotros',        href: '#nosotros' },
+  { label: 'Nuestros Servicios', href: '#servicios' },
   { label: 'Productos',       href: '/productos' },
-  { label: 'Contacto',        href: '/contacto' },
 ] as const;
 
 export interface Service {

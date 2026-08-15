@@ -45,10 +45,8 @@ const AppRoutes = () => {
       <Header />
       <Routes>
         <Route path="/"          element={<Home />} />
-        <Route path="/nosotros"  element={<Nosotros />} />
-        <Route path="/servicios" element={<Servicios />} />
         <Route path="/productos" element={<Productos />} />
-        <Route path="/contacto"  element={<Contacto />} />
+        <Route path="/admin" element={<AdminLayout><Dashboard /></AdminLayout>} />
         <Route path="*"          element={<NotFound />} />
       </Routes>
       <Footer />
