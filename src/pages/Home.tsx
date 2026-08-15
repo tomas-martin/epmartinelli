@@ -5,27 +5,6 @@ import { COMPANY, SERVICES, PRODUCTS, FAQ, GALLERY_IMAGES } from '../data/siteDa
 const Home = () => {
   const [openFaq, setOpenFaq] = useState<string>('faq1');
   const [galleryIndex, setGalleryIndex] = useState(0);
-  const [contactForm, setContactForm] = useState({ name: '', email: '', message: '' });
-  const [contactStatus, setContactStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
-
-  const handleContactChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setContactForm({ ...contactForm, [e.target.name]: e.target.value });
-  };
-
-  const handleContactSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setContactStatus('sending');
-    try {
-      const res = await fetch('http://www.epmartinelli.com.ar/mail.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(contactForm),
-      });
-      setContactStatus(res.ok ? 'success' : 'error');
-    } catch {
-      setContactStatus('error');
-    }
-  };
 
   return (
     <div>
@@ -322,75 +301,15 @@ const Home = () => {
                 <h4>CONTACTO</h4>
                 <h2>Contactanos y <span>conversemos</span></h2>
                 <p>
-                  Completá el formulario y nos comunicamos a la brevedad. También podés
-                  escribirnos por WhatsApp o llamarnos directamente.
+                  Escribinos por WhatsApp, llamanos o mandanos un mail y te respondemos a la
+                  brevedad.
                 </p>
               </div>
             </div>
           </div>
 
           <div className="row mt--50">
-            <div className="col-lg-7">
-              <div className="contact-form-warp">
-                <form onSubmit={handleContactSubmit}>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="input-box">
-                        <input
-                          type="text"
-                          name="name"
-                          placeholder="Nombre Completo *"
-                          value={contactForm.name}
-                          onChange={handleContactChange}
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="input-box">
-                        <input
-                          type="email"
-                          name="email"
-                          placeholder="Email *"
-                          value={contactForm.email}
-                          onChange={handleContactChange}
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className="col-12">
-                      <div className="input-box">
-                        <textarea
-                          name="message"
-                          placeholder="Mensaje... *"
-                          value={contactForm.message}
-                          onChange={handleContactChange}
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="contact-submit-btn">
-                    <button type="submit" className="default-btn" disabled={contactStatus === 'sending'}>
-                      {contactStatus === 'sending' ? 'Enviando...' : 'Enviar Mensaje'}
-                    </button>
-                    {contactStatus === 'success' && (
-                      <p className="form-messege" style={{ color: '#10c45c', marginTop: 10 }}>
-                        ✓ Mensaje enviado correctamente. ¡Gracias!
-                      </p>
-                    )}
-                    {contactStatus === 'error' && (
-                      <p className="form-messege" style={{ color: '#e74c3c', marginTop: 10 }}>
-                        Hubo un error al enviar. Escribinos directamente a{' '}
-                        <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>.
-                      </p>
-                    )}
-                  </div>
-                </form>
-              </div>
-            </div>
-
-            <div className="col-lg-5">
+            <div className="col-lg-6">
               <div className="contact-info-wrap">
                 <div className="single-contact-info">
                   <div className="contact-icon">
@@ -403,12 +322,18 @@ const Home = () => {
                 </div>
                 <div className="single-contact-info">
                   <div className="contact-icon">
-                    <i className="bi bi-phone" />
+                    <i className="bi bi-whatsapp" />
                   </div>
                   <div className="contact-info-dec">
-                    <h3>Teléfono</h3>
+                    <h3>WhatsApp / Teléfono</h3>
                     <p>
-                      <a href={`tel:${COMPANY.phone}`}>{COMPANY.phone}</a>
+                      <a
+                        href={`https://wa.me/${COMPANY.phone}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {COMPANY.phone}
+                      </a>
                     </p>
                   </div>
                 </div>
@@ -423,19 +348,32 @@ const Home = () => {
                     </p>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div className="col-lg-6">
+              <div className="contact-info-wrap">
                 <div className="single-contact-info">
                   <div className="contact-icon">
-                    <i className="bi bi-whatsapp" />
+                    <i className="bi bi-clock" />
                   </div>
                   <div className="contact-info-dec">
-                    <h3>WhatsApp</h3>
+                    <h3>Horarios</h3>
+                    <p>Lunes a Viernes de 8:00 a 17:00 hs</p>
+                  </div>
+                </div>
+                <div className="single-contact-info">
+                  <div className="contact-icon">
+                    <i className="bi bi-send" />
+                  </div>
+                  <div className="contact-info-dec">
+                    <h3>Escribinos directo</h3>
                     <p>
                       <a
-                        href={`https://wa.me/${COMPANY.phone}`}
+                        href={`https://wa.me/${COMPANY.phone}?text=${encodeURIComponent('Hola, quiero hacer una consulta sobre balanzas y básculas.')}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        {COMPANY.phone}
+                        Abrir conversación de WhatsApp
                       </a>
                     </p>
                   </div>

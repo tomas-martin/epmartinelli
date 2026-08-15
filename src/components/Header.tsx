@@ -26,7 +26,7 @@ const Header = () => {
                     </a>
                   </li>
                   <li>
-                    <a href={`tel:${COMPANY.phone}`}>
+                    <a href={`https://wa.me/${COMPANY.phone}`} target="_blank" rel="noopener noreferrer">
                       &nbsp;&nbsp;&nbsp;<i className="bi bi-phone" /> {COMPANY.phone}
                     </a>
                   </li>

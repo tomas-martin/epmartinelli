@@ -52,11 +52,8 @@ const Footer = () => {
                         <a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a>
                       </li>
                       <li>
-                        <a href={`tel:${COMPANY.phone}`}>{COMPANY.phone}</a>
-                      </li>
-                      <li>
-                        <a href="https://wa.me/${COMPANY.phone}" target="_blank" rel="noopener noreferrer">
-                          <i className="bi bi-whatsapp" style={{ color: '#25D366' }} />
+                        <a href={`https://wa.me/${COMPANY.phone}`} target="_blank" rel="noopener noreferrer">
+                          <i className="bi bi-whatsapp" style={{ color: '#25D366' }} /> {COMPANY.phone}
                         </a>
                       </li>
                     </ul>
