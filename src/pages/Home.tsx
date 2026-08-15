@@ -250,54 +250,63 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-lg-10 ml-auto mr-auto">
-              <div
-                className="gallery-carousel"
-                onTouchStart={handleTouchStart}
-                onTouchEnd={handleTouchEnd}
-                onMouseEnter={() => setGalleryAutoplay(false)}
-                onMouseLeave={() => setGalleryAutoplay(true)}
-              >
+        </div>
+        <div className="banner-area">
+          <div className="container-fluid p-0">
+            <div className="row no-gutters">
+              <div className="col-lg-12">
                 <div
-                  className="gallery-carousel-track"
-                  style={{ transform: `translateX(-${galleryIndex * 100}%)` }}
+                  className="gallery-carousel slick-initialized slick-slider"
+                  style={{ '--gallery-index': galleryIndex } as React.CSSProperties}
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={handleTouchEnd}
+                  onMouseEnter={() => setGalleryAutoplay(false)}
+                  onMouseLeave={() => setGalleryAutoplay(true)}
                 >
-                  {GALLERY_IMAGES.map((img, i) => (
-                    <div className="gallery-carousel-slide" key={i}>
-                      <img src={img} alt={`Trabajo ${i + 1}`} />
+                  <div className="slick-list draggable">
+                    <div className="slick-track">
+                      {GALLERY_IMAGES.map((img, i) => (
+                        <div
+                          key={i}
+                          className={`item slick-slide${i === galleryIndex ? ' slick-current slick-active slick-center' : ''}`}
+                        >
+                          <div className="single-gallery-image">
+                            <div className="gallery-box">
+                              <a className="img-popup" href={img} onClick={(e) => e.preventDefault()}>
+                                <img src={img} alt={`Trabajo ${i + 1}`} />
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </div>
 
-                <button
-                  className="gallery-arrow gallery-arrow-prev"
-                  onClick={goPrev}
-                  aria-label="Anterior"
-                >
-                  ‹
-                </button>
-                <button
-                  className="gallery-arrow gallery-arrow-next"
-                  onClick={goNext}
-                  aria-label="Siguiente"
-                >
-                  ›
-                </button>
+                  <button
+                    className="gallery-arrow gallery-arrow-prev"
+                    onClick={goPrev}
+                    aria-label="Anterior"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    className="gallery-arrow gallery-arrow-next"
+                    onClick={goNext}
+                    aria-label="Siguiente"
+                  >
+                    ›
+                  </button>
 
-                <div className="gallery-counter">
-                  {galleryIndex + 1} / {GALLERY_IMAGES.length}
-                </div>
-
-                <div className="gallery-dots">
-                  {GALLERY_IMAGES.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setGalleryIndex(i)}
-                      className={i === galleryIndex ? 'active' : ''}
-                      aria-label={`Imagen ${i + 1}`}
-                    />
-                  ))}
+                  <div className="gallery-dots">
+                    {GALLERY_IMAGES.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setGalleryIndex(i)}
+                        className={i === galleryIndex ? 'active' : ''}
+                        aria-label={`Imagen ${i + 1}`}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

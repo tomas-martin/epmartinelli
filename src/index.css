@@ -233,31 +233,46 @@
   color: #42b6f5;
 }
 
-/* ===== Gallery carousel ===== */
+/* ===== Gallery carousel (slick center mode) ===== */
 .gallery-carousel {
   position: relative;
+  --sw: 359px;
+}
+.gallery-carousel .slick-list {
   overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
-  background: #0b2a4a;
-  max-width: 470px;
-  margin: 0 auto;
+  padding: 0 120px;
 }
-.gallery-carousel-track {
-  display: flex;
-  transition: transform 0.55s ease;
-}
-.gallery-carousel-slide {
-  min-width: 100%;
-  aspect-ratio: 470 / 330;
+.gallery-carousel .slick-track {
   display: flex;
   align-items: center;
-  justify-content: center;
+  left: 50%;
+  transform: translateX(calc(-1 * var(--gallery-index) * var(--sw) - var(--sw) / 2)) !important;
+  transition: transform 0.55s ease;
 }
-.gallery-carousel-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.gallery-carousel .slick-slide {
+  width: var(--sw);
+  flex: 0 0 auto;
+  float: none;
+  height: auto;
+  padding: 0 10px;
+  outline: none;
+}
+.gallery-carousel .single-gallery-image {
+  margin-top: 0;
+}
+.gallery-carousel .slick-slide .gallery-box {
+  border-radius: 8px;
+  transition: opacity 0.45s ease, transform 0.45s ease, box-shadow 0.45s ease;
+}
+.gallery-carousel .slick-slide:not(.slick-center) .gallery-box {
+  opacity: 0.55;
+  transform: scale(0.92);
+}
+.gallery-carousel .slick-center .gallery-box {
+  position: relative;
+  z-index: 2;
+  transform: scale(1);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
 }
 .gallery-arrow {
   position: absolute;
@@ -277,7 +292,7 @@
   cursor: pointer;
   transition: background 0.3s, color 0.3s;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  z-index: 2;
+  z-index: 3;
 }
 .gallery-arrow:hover {
   background: #42b6f5;
@@ -289,17 +304,6 @@
 .gallery-arrow-next {
   right: 14px;
 }
-.gallery-counter {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  background: rgba(3, 27, 56, 0.78);
-  color: #fff;
-  font-size: 13px;
-  padding: 5px 12px;
-  border-radius: 20px;
-  z-index: 2;
-}
 .gallery-dots {
   position: absolute;
   bottom: 14px;
@@ -307,26 +311,42 @@
   transform: translateX(-50%);
   display: flex;
   gap: 8px;
-  z-index: 2;
+  z-index: 3;
+  background: rgba(255, 255, 255, 0.75);
+  padding: 6px 10px;
+  border-radius: 20px;
 }
 .gallery-dots button {
   width: 10px;
   height: 10px;
   border-radius: 50%;
   border: none;
-  background: rgba(255, 255, 255, 0.5);
+  background: #031b38;
+  opacity: 0.4;
   cursor: pointer;
   padding: 0;
-  transition: background 0.3s, transform 0.3s;
+  transition: opacity 0.3s, transform 0.3s;
 }
 .gallery-dots button.active {
+  opacity: 1;
   background: #42b6f5;
   transform: scale(1.25);
 }
 
-@media (max-width: 767.98px) {
-  .gallery-carousel-slide {
-    aspect-ratio: 4 / 3;
+@media (max-width: 991.98px) {
+  .gallery-carousel {
+    --sw: 300px;
+  }
+  .gallery-carousel .slick-list {
+    padding: 0 70px;
+  }
+}
+@media (max-width: 575.98px) {
+  .gallery-carousel {
+    --sw: 240px;
+  }
+  .gallery-carousel .slick-list {
+    padding: 0 40px;
   }
   .gallery-arrow {
     width: 38px;
