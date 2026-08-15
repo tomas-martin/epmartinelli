@@ -1,16 +1,19 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth, roleLabel } from '../../context/AuthContext';
 
 const NAV_ITEMS = [
-  { to: '/admin', label: 'Inicio', icon: 'bi bi-house' },
-  { to: '/admin/productos', label: 'Productos', icon: 'bi bi-box' },
-  { to: '/admin/stock', label: 'Stock', icon: 'bi bi-archive' },
-  { to: '/admin/historial', label: 'Historial', icon: 'bi bi-clock-history' },
+  { to: '/admin', label: 'Inicio', icon: 'bi bi-house', ownerOnly: false },
+  { to: '/admin/productos', label: 'Productos', icon: 'bi bi-box', ownerOnly: false },
+  { to: '/admin/stock', label: 'Stock', icon: 'bi bi-archive', ownerOnly: false },
+  { to: '/admin/historial', label: 'Historial', icon: 'bi bi-clock-history', ownerOnly: false },
+  { to: '/admin/usuarios', label: 'Usuarios', icon: 'bi bi-people', ownerOnly: true },
 ];
 
 const AdminSidebar = () => {
   const { pathname } = useLocation();
   const { profile, signOut } = useAuth();
+
+  const visibleItems = NAV_ITEMS.filter((item) => !item.ownerOnly || profile?.role === 'owner');
 
   return (
     <aside className="admin-sidebar">
@@ -19,7 +22,7 @@ const AdminSidebar = () => {
       </div>
       <nav className="admin-sidebar-nav">
         <ul>
-          {NAV_ITEMS.map((item) => (
+          {visibleItems.map((item) => (
             <li key={item.to} className={pathname === item.to ? 'active' : ''}>
               <NavLink to={item.to}>
                 <i className={item.icon}></i>
@@ -34,7 +37,7 @@ const AdminSidebar = () => {
           <i className="bi bi-person-circle"></i>
           <div>
             <strong>{profile?.display_name}</strong>
-            <small>{profile?.role === 'owner' ? 'Dueño' : 'Empleado'}</small>
+            <small>{roleLabel(profile?.role)}</small>
           </div>
         </div>
         <button className="btn btn-sm btn w-100 mt-2" onClick={signOut} style={{ background: 'transparent', borderColor: '#42b6f5', color: '#42b6f5' }}>

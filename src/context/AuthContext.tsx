@@ -2,7 +2,16 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from '
 import type { User } from '@supabase/supabase-js';
 import { supabase } from '../lib/supabase';
 
-export type UserRole = 'owner' | 'employee';
+export type UserRole = 'owner' | 'admin' | 'employee';
+
+export const ROLE_LABELS: Record<UserRole, string> = {
+  owner: 'Dueño',
+  admin: 'Administrador',
+  employee: 'Empleado',
+};
+
+export const roleLabel = (role: UserRole | undefined) =>
+  role ? ROLE_LABELS[role] : '—';
 
 export interface Profile {
   id: string;

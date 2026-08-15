@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
-import { useAuth } from '../../context/AuthContext';
 
 interface MovementDisplay {
   id: string;
@@ -12,14 +11,12 @@ interface MovementDisplay {
 }
 
 const History = () => {
-  const { profile } = useAuth();
-  const isOwner = profile?.role === 'owner';
   const [movements, setMovements] = useState<MovementDisplay[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadMovements = async () => {
-      let query = supabase
+      const { data } = await supabase
         .from('stock_movements')
         .select(`
           *,
@@ -27,12 +24,6 @@ const History = () => {
           user:profiles(display_name)
         `)
         .order('created_at', { ascending: false });
-
-      if (!isOwner) {
-        query = query.eq('user_id', profile?.id);
-      }
-
-      const { data } = await query;
 
       if (data) {
         setMovements(
@@ -47,7 +38,7 @@ const History = () => {
     };
 
     loadMovements();
-  }, [isOwner, profile?.id]);
+  }, []);
 
   if (loading) {
     return <div className="text-center py-5"><div className="spinner-border text-primary" /></div>;
@@ -57,7 +48,7 @@ const History = () => {
     <div>
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2 className="mb-0">Historial de movimientos</h2>
-        {!isOwner && <span className="text-muted">Mostrando tu actividad</span>}
+        <span className="text-muted">Todos los movimientos</span>
       </div>
 
       <div className="admin-card">

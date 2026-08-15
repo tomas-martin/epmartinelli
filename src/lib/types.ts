@@ -21,9 +21,11 @@ export interface StockMovement {
   created_at: string;
 }
 
+export type UserRole = 'owner' | 'admin' | 'employee';
+
 export interface Profile {
   id: string;
   username: string;
   display_name: string;
-  role: 'owner' | 'employee';
+  role: UserRole;
 }

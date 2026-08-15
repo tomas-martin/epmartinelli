@@ -1,32 +1,51 @@
-# React + TypeScript + Vite
+# E.P. Martinelli — Panel de Administración
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Landing page + panel de administración (React + TypeScript + Vite) con Supabase.
 
-Currently, two official plugins are available:
+## Configuración local
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. Crear `.env.local` a partir de `.env.example` con la URL y anon key del proyecto Supabase.
+2. `npm install`
+3. `npm run dev`
 
-## React Compiler
+## Base de datos
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Ejecutar `supabase-schema.sql` en el SQL Editor de Supabase. Si ya tenías el esquema
+anterior aplicado, ejecutá la sección **MIGRACIÓN** al final del archivo.
 
-## Expanding the Oxlint configuration
+Roles disponibles:
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+- **owner (Dueño)**: acceso total + crea/elimina usuarios (administradores y empleados).
+- **admin (Administrador)**: gestiona productos y stock, ve historial completo. No crea usuarios.
+- **employee (Empleado)**: ve productos (con precios), gestiona stock, ve historial completo. No crea usuarios.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
+## Edge Functions (crear usuarios desde el panel)
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Para que el dueño pueda crear administradores/empleados desde el panel (`/admin/usuarios`),
+se necesitan dos Edge Functions de Supabase: `create-user` y `delete-user`.
+
+1. Instalar el CLI de Supabase si no lo tenés:
+   ```
+   npm install -g supabase
+   ```
+2. Ingresar y vincular el proyecto:
+   ```
+   supabase login
+   supabase link --project-ref <tu-project-ref>
+   ```
+3. Deployar las funciones:
+   ```
+   supabase functions deploy create-user
+   supabase functions deploy delete-user
+   ```
+4. En el Dashboard de Supabase (Settings → API), copiar la **service_role key**.
+5. En el dashboard de la Edge Function, agregar la variable de entorno
+   `SUPABASE_SERVICE_ROLE_KEY` con esa clave (la `SUPABASE_URL` y `SUPABASE_ANON_KEY`
+   se inyectan automáticamente al deployar).
+
+> ⚠️ La service_role key tiene acceso total. Solo usala como variable de entorno de
+> las funciones, nunca en el frontend (`.env.local` solo lleva la anon key).
+
+## Deploy en Vercel
+
+La SPA usa `vercel.json` con rewrites para que las rutas de `/admin` no den 404.

@@ -29,6 +29,27 @@
   padding: 120px 0;
 }
 
+/* Botones: texto siempre visible */
+.primary-btn {
+  color: #ffffff;
+}
+.about-us-content a.default-btn,
+.about-us-content a.primary-btn {
+  color: #ffffff;
+}
+.product-card > a,
+.product-catalog-item > a {
+  color: #42b6f5;
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.product-card > a:hover,
+.product-catalog-item > a:hover {
+  color: #2a6e9e;
+}
+
 /* Product cards (ya definidas en style.css, refuerzo aqui) */
 .product-card {
   border: 1px solid #e8e8e8;
@@ -163,6 +184,23 @@
   height: 100%;
 }
 
+@media (min-width: 992px) {
+  .logo-area {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    margin: 0 !important;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  .logo-area img {
+    width: auto;
+    max-width: 210px;
+    max-height: 52px;
+  }
+}
+
 @media (max-width: 991.98px) {
   .main-menu {
     display: none;
@@ -173,6 +211,9 @@
   .header-bottom-wrap .col-6 {
     display: flex;
     align-items: center;
+  }
+  .header-bottom-wrap .col-6:last-child {
+    justify-content: flex-end;
   }
   .logo-area-movil {
     margin: 0;
@@ -185,6 +226,7 @@
   }
   .header-right-wrap {
     height: auto;
+    width: 100%;
   }
   .mobile-menu {
     display: flex;

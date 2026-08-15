@@ -13,6 +13,7 @@ import Dashboard from './pages/admin/Dashboard';
 import AdminProducts from './pages/admin/Products';
 import Stock from './pages/admin/Stock';
 import History from './pages/admin/History';
+import Users from './pages/admin/Users';
 
 const ScrollToTop = () => {
   const { pathname, hash } = useLocation();
@@ -41,6 +42,7 @@ const AppRoutes = () => {
         <Route path="/admin/productos" element={<AdminLayout><AdminProducts /></AdminLayout>} />
         <Route path="/admin/stock" element={<AdminLayout><Stock /></AdminLayout>} />
         <Route path="/admin/historial" element={<AdminLayout><History /></AdminLayout>} />
+        <Route path="/admin/usuarios" element={<AdminLayout><Users /></AdminLayout>} />
       </Routes>
     );
   }

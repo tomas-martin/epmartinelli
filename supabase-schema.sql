@@ -8,7 +8,7 @@ CREATE TABLE profiles (
   id UUID REFERENCES auth.users ON DELETE CASCADE PRIMARY KEY,
   username TEXT UNIQUE NOT NULL,
   display_name TEXT NOT NULL,
-  role TEXT NOT NULL CHECK (role IN ('owner', 'employee')),
+  role TEXT NOT NULL CHECK (role IN ('owner', 'admin', 'employee')),
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -67,17 +67,11 @@ $$;
 -- POLÍTICAS PARA PROFILES
 -- ============================================================
 
--- Dueño: puede leer todos los perfiles
-CREATE POLICY "Owner can read all profiles"
+-- Todos los usuarios autenticados pueden leer perfiles
+-- (necesario para mostrar quién hizo cada movimiento en el historial)
+CREATE POLICY "Authenticated users can read profiles"
   ON profiles FOR SELECT
-  USING (
-    public.current_user_role() = 'owner'
-  );
-
--- Empleado: puede leer su propio perfil
-CREATE POLICY "Employee can read own profile"
-  ON profiles FOR SELECT
-  USING (id = auth.uid());
+  USING (auth.role() = 'authenticated');
 
 -- Solo el dueño puede insertar/actualizar/eliminar perfiles
 CREATE POLICY "Owner can insert profiles"
@@ -112,40 +106,34 @@ CREATE POLICY "Authenticated users can read products"
   ON products FOR SELECT
   USING (auth.role() = 'authenticated');
 
--- Solo el dueño puede insertar, actualizar o eliminar productos
+-- Solo el dueño y el administrador pueden insertar, actualizar o eliminar productos
 CREATE POLICY "Owner can insert products"
   ON products FOR INSERT
   WITH CHECK (
-    public.current_user_role() = 'owner'
+    public.current_user_role() IN ('owner', 'admin')
   );
 
 CREATE POLICY "Owner can update products"
   ON products FOR UPDATE
   USING (
-    public.current_user_role() = 'owner'
+    public.current_user_role() IN ('owner', 'admin')
   );
 
 CREATE POLICY "Owner can delete products"
   ON products FOR DELETE
   USING (
-    public.current_user_role() = 'owner'
+    public.current_user_role() IN ('owner', 'admin')
   );
 
 -- ============================================================
 -- POLÍTICAS PARA STOCK_MOVEMENTS
 -- ============================================================
 
--- Dueño: puede leer todos los movimientos
-CREATE POLICY "Owner can read all movements"
+-- Todos los usuarios autenticados pueden leer todos los movimientos
+-- (el historial completo es visible para dueño, administrador y empleado)
+CREATE POLICY "Authenticated users can read all movements"
   ON stock_movements FOR SELECT
-  USING (
-    public.current_user_role() = 'owner'
-  );
-
--- Empleado: puede leer sus propios movimientos
-CREATE POLICY "Employee can read own movements"
-  ON stock_movements FOR SELECT
-  USING (user_id = auth.uid());
+  USING (auth.role() = 'authenticated');
 
 -- Cualquier usuario autenticado puede insertar movimientos
 CREATE POLICY "Authenticated users can insert movements"
@@ -175,3 +163,37 @@ DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+
+-- ============================================================
+-- MIGRACIÓN (solo si ya tenés el esquema anterior aplicado)
+-- ============================================================
+
+-- Permitir rol 'admin' en la tabla de perfiles
+ALTER TABLE profiles DROP CONSTRAINT IF EXISTS profiles_role_check;
+ALTER TABLE profiles ADD CONSTRAINT profiles_role_check
+  CHECK (role IN ('owner', 'admin', 'employee'));
+
+-- Recrear políticas de productos para que el admin también gestione el catálogo
+DROP POLICY IF EXISTS "Owner can insert products" ON products;
+DROP POLICY IF EXISTS "Owner can update products" ON products;
+DROP POLICY IF EXISTS "Owner can delete products" ON products;
+CREATE POLICY "Owner can insert products" ON products FOR INSERT
+  WITH CHECK (public.current_user_role() IN ('owner', 'admin'));
+CREATE POLICY "Owner can update products" ON products FOR UPDATE
+  USING (public.current_user_role() IN ('owner', 'admin'));
+CREATE POLICY "Owner can delete products" ON products FOR DELETE
+  USING (public.current_user_role() IN ('owner', 'admin'));
+
+-- Historial completo visible para todos los autenticados
+DROP POLICY IF EXISTS "Owner can read all movements" ON stock_movements;
+DROP POLICY IF EXISTS "Employee can read own movements" ON stock_movements;
+CREATE POLICY "Authenticated users can read all movements"
+  ON stock_movements FOR SELECT
+  USING (auth.role() = 'authenticated');
+
+-- Perfiles legibles por todos los autenticados (para el historial)
+DROP POLICY IF EXISTS "Owner can read all profiles" ON profiles;
+DROP POLICY IF EXISTS "Employee can read own profile" ON profiles;
+CREATE POLICY "Authenticated users can read profiles"
+  ON profiles FOR SELECT
+  USING (auth.role() = 'authenticated');

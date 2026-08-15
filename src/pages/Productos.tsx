@@ -1,11 +1,8 @@
 import { Link } from 'react-router-dom';
-import Breadcrumb from '../components/Breadcrumb';
 import { PRODUCTS } from '../data/siteData';
 
 const Productos = () => (
   <div>
-    <Breadcrumb title="Productos" current="Productos" />
-
     <main className="page-content">
       {/* Intro */}
       <div className="breadcrumb-area section-ptb bg-light-grey">

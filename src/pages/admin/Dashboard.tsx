@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth, roleLabel } from '../../context/AuthContext';
 import type { Product, StockMovement } from '../../lib/types';
 
 interface DashboardStats {
@@ -67,7 +67,7 @@ const Dashboard = () => {
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2 className="mb-0">Inicio</h2>
         <span className="text-muted">
-          {profile?.display_name} ({profile?.role === 'owner' ? 'Dueño' : 'Empleado'})
+          {profile?.display_name} ({roleLabel(profile?.role)})
         </span>
       </div>
 

@@ -5,7 +5,7 @@ import type { Product } from '../../lib/types';
 
 const Products = () => {
   const { profile } = useAuth();
-  const isOwner = profile?.role === 'owner';
+  const isManager = profile?.role === 'owner' || profile?.role === 'admin';
   const [products, setProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<'all' | 'active' | 'inactive'>('all');
@@ -95,7 +95,7 @@ const Products = () => {
   };
 
   const toggleActive = async (p: Product) => {
-    if (!isOwner) return;
+    if (!isManager) return;
     await supabase.from('products').update({ active: !p.active }).eq('id', p.id);
     loadProducts();
   };
@@ -110,7 +110,7 @@ const Products = () => {
     <div>
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2 className="mb-0">Productos</h2>
-        {isOwner && (
+        {isManager && (
           <button className="btn btn-primary" onClick={openNew}>
             <i className="bi bi-plus"></i> Nuevo producto
           </button>
@@ -140,7 +140,7 @@ const Products = () => {
         </div>
       </div>
 
-      {showForm && isOwner && (
+      {showForm && isManager && (
         <div className="admin-card mb-4">
           <div className="admin-card-header">
             <h5 className="mb-0">{editing ? 'Editar producto' : 'Nuevo producto'}</h5>
@@ -204,10 +204,10 @@ const Products = () => {
                     <th>SKU</th>
                     <th>Nombre</th>
                     <th>Categoría</th>
-                    {isOwner && <th>Precio</th>}
+                    <th>Precio</th>
                     <th>Stock</th>
                     <th>Estado</th>
-                    {isOwner && <th>Acciones</th>}
+                    {isManager && <th>Acciones</th>}
                   </tr>
                 </thead>
                 <tbody>
@@ -223,9 +223,7 @@ const Products = () => {
                         <td><code>{p.sku}</code></td>
                         <td>{p.name}</td>
                         <td>{p.category || '—'}</td>
-                        {isOwner && (
-                          <td>{priceDisplay}</td>
-                        )}
+                        <td>{priceDisplay}</td>
                         <td>
                           <span className={'stock-badge ' + status.cls}>{status.label}</span>
                         </td>
@@ -234,7 +232,7 @@ const Products = () => {
                             {activeLabel}
                           </span>
                         </td>
-                        {isOwner && (
+                        {isManager && (
                           <td>
                             <div className="d-flex gap-1">
                               <button className="btn btn-sm btn-outline-primary" onClick={() => openEdit(p)}>
