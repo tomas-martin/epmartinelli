@@ -30,17 +30,22 @@ const Productos = () => (
               <div key={product.id} className="col-lg-4 col-md-6 mb--30" id={product.id}>
                 <div className={`product-catalog-item${product.highlight ? ' product-card-highlight' : ''}`}>
                   <div className="product-card-icon">
-                    <span>{product.number}</span>
+                    <i className={`bi ${product.icon}`}></i>
                   </div>
+                  <span className="product-card-number">{product.number}</span>
                   <h3>{product.title}</h3>
                   <p>{product.description}</p>
                   <ul>
                     {product.items.map((item) => (
-                      <li key={item}>{item}</li>
+                      <li key={item}>
+                        <i className="bi bi-check-circle"></i>
+                        {item}
+                      </li>
                     ))}
                   </ul>
-                  <Link to="/#contacto" className="default-btn">
-                    {product.highlight ? 'Contactanos' : 'Consultar'}
+                  <Link to={product.href} className="default-btn product-card-cta">
+                    {product.cta}
+                    <i className="bi bi-arrow-right-rounded"></i>
                   </Link>
                 </div>
               </div>
@@ -70,6 +75,7 @@ const Productos = () => (
                 </p>
                 <Link to="/#contacto" className="default-btn" style={{ marginTop: 16 }}>
                   Consultar ahora
+                  <i className="bi bi-arrow-right-rounded"></i>
                 </Link>
               </div>
             </div>

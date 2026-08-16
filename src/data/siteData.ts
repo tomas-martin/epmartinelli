@@ -61,6 +61,7 @@ export interface Product {
   highlight?: boolean;
   cta: string;
   href: string;
+  icon: string;
 }
 
 export const PRODUCTS: Product[] = [
@@ -73,6 +74,7 @@ export const PRODUCTS: Product[] = [
     items: ['Distintas capacidades', 'Aplicaciones industriales', 'Asesoramiento y servicio técnico'],
     cta: 'Ver productos',
     href: '/productos#industriales',
+    icon: 'bi-scale',
   },
   {
     id: 'precision',
@@ -83,6 +85,7 @@ export const PRODUCTS: Product[] = [
     items: ['Aplicaciones de precisión', 'Control de resultados', 'Calibración y certificación'],
     cta: 'Ver productos',
     href: '/productos#precision',
+    icon: 'bi-measurement',
   },
   {
     id: 'sistemas',
@@ -93,6 +96,7 @@ export const PRODUCTS: Product[] = [
     items: ['Plataformas de pesaje', 'Sistemas para procesos', 'Integración y soporte técnico'],
     cta: 'Ver productos',
     href: '/productos#sistemas',
+    icon: 'bi-board',
   },
   {
     id: 'accesorios',
@@ -103,6 +107,7 @@ export const PRODUCTS: Product[] = [
     items: ['Indicadores', 'Componentes', 'Accesorios para pesaje'],
     cta: 'Ver productos',
     href: '/productos#accesorios',
+    icon: 'bi-monitor',
   },
   {
     id: 'insumos',
@@ -112,6 +117,7 @@ export const PRODUCTS: Product[] = [
     items: ['Insumos industriales', 'Elementos de mantenimiento', 'Asesoramiento técnico'],
     cta: 'Ver productos',
     href: '/productos#insumos',
+    icon: 'bi-cube',
   },
   {
     id: 'consulta',
@@ -123,6 +129,7 @@ export const PRODUCTS: Product[] = [
     highlight: true,
     cta: 'Consultar ahora',
     href: '/#contacto',
+    icon: 'bi-search',
   },
 ];
 
