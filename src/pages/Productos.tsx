@@ -4,17 +4,19 @@ import { PRODUCTS } from '../data/siteData';
 const Productos = () => (
   <div>
     <main className="page-content">
-      {/* Intro */}
-      <div className="breadcrumb-area section-ptb bg-light-grey">
+      {/* Intro Header Banner */}
+      <div className="product-catalog-hero">
         <div className="container">
           <div className="row">
-            <div className="col-lg-8 ml-auto mr-auto text-center">
-              <div className="section-title product-catalog-intro">
-                <h4>CATÁLOGO</h4>
-                <h2>Nuestros <span>productos</span></h2>
+            <div className="col-lg-9 ml-auto mr-auto text-center">
+              <div className="product-catalog-intro">
+                <span className="product-catalog-badge">CATÁLOGO DE PRODUCTOS</span>
+                <h1>
+                  Soluciones de <span>Pesaje</span> Industrial y Precisión
+                </h1>
                 <p>
-                  Soluciones de pesaje para diferentes aplicaciones. La disponibilidad,
-                  capacidad y configuración se define según las necesidades de cada cliente.
+                  Equipos de alta confiabilidad para laboratorios, comercios e industrias.
+                  La disponibilidad, capacidad y configuración se definen a la medida de tus procesos.
                 </p>
               </div>
             </div>
@@ -22,31 +24,37 @@ const Productos = () => (
         </div>
       </div>
 
-      {/* Catálogo */}
+      {/* Catálogo Grid */}
       <div className="product-catalog-area section-ptb">
         <div className="container">
-          <div className="row">
+          <div className="row d-flex align-items-stretch">
             {PRODUCTS.map((product) => (
-              <div key={product.id} className="col-lg-4 col-md-6 mb--30" id={product.id}>
+              <div key={product.id} className="col-lg-4 col-md-6 col-12 d-flex align-items-stretch mb--30" id={product.id}>
                 <div className={`product-catalog-item${product.highlight ? ' product-card-highlight' : ''}`}>
-                  <div className="product-card-icon">
-                    <i className={`bi ${product.icon}`}></i>
+                  <div className="product-card-top">
+                    <div className="product-card-icon">
+                      <i className={`bi ${product.icon}`}></i>
+                    </div>
+                    <span className="product-card-number">{product.number}</span>
                   </div>
-                  <span className="product-card-number">{product.number}</span>
                   <h3>{product.title}</h3>
                   <p>{product.description}</p>
-                  <ul>
+                  <ul className="product-item-features">
                     {product.items.map((item) => (
                       <li key={item}>
-                        <i className="bi bi-check-circle"></i>
-                        {item}
+                        <i className="bi bi-check2-circle"></i>
+                        <span>{item}</span>
                       </li>
                     ))}
                   </ul>
-                  <Link to={product.href} className="default-btn product-card-cta">
-                    {product.cta}
-                    <i className="bi bi-arrow-right-rounded"></i>
-                  </Link>
+                  <a
+                    href={product.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="product-card-cta-btn"
+                  >
+                    <i className="bi bi-whatsapp"></i> {product.cta}
+                  </a>
                 </div>
               </div>
             ))}
@@ -54,37 +62,41 @@ const Productos = () => (
         </div>
       </div>
 
-      {/* CTA inferior */}
-      <div className="about-us-area section-ptb bg-light-grey">
+      {/* CTA inferior de Asesoramiento */}
+      <div className="product-cta-banner-area section-pb-90">
         <div className="container">
-          <div className="row align-items-center">
-            <div className="col-lg-6">
-              <div className="about-us-content">
-                <div className="about-section-title text-left">
-                  <h4>ASESORAMIENTO</h4>
-                  <h2>¿No encontrás lo que <span>necesitás</span>?</h2>
+          <div className="product-cta-card">
+            <div className="row align-items-center">
+              <div className="col-lg-7">
+                <div className="product-cta-content">
+                  <span className="product-cta-badge">ASESORAMIENTO TÉCNICO</span>
+                  <h2>¿No encontrás el equipo que <span>necesitás</span>?</h2>
+                  <p>
+                    Contamos con acceso a una amplia gama de soluciones de pesaje.
+                    Contanos tu aplicación y te ayudamos a seleccionar el equipo ideal o evaluar tus balanzas actuales.
+                  </p>
+                  <div className="product-cta-actions">
+                    <a
+                      href="https://wa.me/2613463459?text=Hola,%20necesito%20asesoramiento%20sobre%20un%20equipo%20de%20pesaje"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="primary-btn"
+                    >
+                      <i className="bi bi-whatsapp"></i> Hablar con un Asesor
+                    </a>
+                    <Link to="/#contacto" className="default-btn">
+                      Enviar Mensaje
+                    </Link>
+                  </div>
                 </div>
-                <p>
-                  Contamos con acceso a una amplia gama de equipos y soluciones de pesaje.
-                  Si no encontrás el producto que buscás en nuestro catálogo, contanos tu
-                  aplicación y te orientamos.
-                </p>
-                <p>
-                  También podemos evaluar el estado de tus equipos actuales y recomendarte
-                  la mejor alternativa según tu proceso productivo.
-                </p>
-                <Link to="/#contacto" className="default-btn" style={{ marginTop: 16 }}>
-                  Consultar ahora
-                  <i className="bi bi-arrow-right-rounded"></i>
-                </Link>
               </div>
-            </div>
-            <div className="col-lg-6">
-              <div className="about-us-image">
-                <img
-                  src="/assets/images/propias/asesoramiento.jpg"
-                  alt="Asesoramiento"
-                />
+              <div className="col-lg-5">
+                <div className="product-cta-image">
+                  <img
+                    src="/assets/images/propias/asesoramiento.jpg"
+                    alt="Asesoramiento técnico en pesaje"
+                  />
+                </div>
               </div>
             </div>
           </div>

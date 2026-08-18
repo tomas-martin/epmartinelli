@@ -37,14 +37,14 @@ const Home = () => {
         style={{
           backgroundImage: 'url(/assets/images/slider/portada.jpeg)',
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundPosition: 'center 30%',
           position: 'relative',
         }}
       >
         <div
           style={{
             position: 'absolute', inset: 0,
-            background: 'rgba(0,0,0,0.45)',
+            background: 'linear-gradient(180deg, rgba(3, 27, 56, 0.65) 0%, rgba(3, 27, 56, 0.45) 100%)',
           }}
         />
         <div className="single-slide">
@@ -120,15 +120,15 @@ const Home = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg-7 ml-auto mr-auto">
-              <div className="section-title">
+              <div className="section-title text-center">
                 <h2>NUESTROS <span>SERVICIOS</span></h2>
               </div>
             </div>
           </div>
-          <div className="row">
+          <div className="row d-flex align-items-stretch">
             {SERVICES.map((service) => (
-              <div key={service.title} className="col-lg-4 col-md-6 col-12">
-                <div className="provide-service mt--30">
+              <div key={service.title} className="col-lg-4 col-md-6 col-12 d-flex align-items-stretch">
+                <div className="provide-service">
                   <div className="provide-image">
                     <img src={service.image} alt={service.title} />
                   </div>
@@ -137,6 +137,16 @@ const Home = () => {
                   </h5>
                   <div className="provide-contets">
                     <p>{service.description}</p>
+                  </div>
+                  <div className="provide-card-footer">
+                    <a
+                      href={`https://wa.me/2613463459?text=Hola,%20quisiera%20consultar%20sobre%20el%20servicio%20de%20${encodeURIComponent(service.title)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="service-cta-btn"
+                    >
+                      <i className="bi bi-whatsapp" /> Consultar servicio
+                    </a>
                   </div>
                 </div>
               </div>
@@ -149,7 +159,7 @@ const Home = () => {
       <div className="products-area section-ptb" id="products">
         <div className="container">
           <div className="row">
-            <div className="col-lg-8 ml-auto mr-auto">
+            <div className="col-lg-8 ml-auto mr-auto text-center">
               <div className="section-title">
                 <h4>NUESTROS PRODUCTOS</h4>
                 <h2>
@@ -163,16 +173,16 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className="row mt--30">
+          <div className="row d-flex align-items-stretch mt--10">
             {PRODUCTS.map((product) => (
-              <div key={product.id} className="col-lg-4 col-md-6 mt--30">
+              <div key={product.id} className="col-lg-4 col-md-6 col-12 d-flex align-items-stretch mt--30">
                 <div className={`product-card${product.highlight ? ' product-card-highlight' : ''}`}>
                   <div className="product-card-icon">
                     <span>{product.number}</span>
                   </div>
                   <h3>{product.title}</h3>
                   <p>{product.description}</p>
-                  <Link to={product.href}>
+                  <Link to={product.href} className="product-card-cta-link">
                     {product.cta} <span>→</span>
                   </Link>
                 </div>

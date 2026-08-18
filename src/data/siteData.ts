@@ -72,9 +72,9 @@ export const PRODUCTS: Product[] = [
     description:
       'Soluciones para procesos productivos y aplicaciones industriales de distintas capacidades.',
     items: ['Distintas capacidades', 'Aplicaciones industriales', 'Asesoramiento y servicio técnico'],
-    cta: 'Ver productos',
-    href: '/productos#industriales',
-    icon: 'bi-scale',
+    cta: 'Consultar por este equipo',
+    href: 'https://wa.me/2613463459?text=Hola,%20quisiera%20consultar%20sobre%20Balanzas%20Industriales',
+    icon: 'bi-truck',
   },
   {
     id: 'precision',
@@ -83,9 +83,9 @@ export const PRODUCTS: Product[] = [
     description:
       'Equipos orientados a aplicaciones que requieren mayor precisión y control de resultados.',
     items: ['Aplicaciones de precisión', 'Control de resultados', 'Calibración y certificación'],
-    cta: 'Ver productos',
-    href: '/productos#precision',
-    icon: 'bi-measurement',
+    cta: 'Consultar por este equipo',
+    href: 'https://wa.me/2613463459?text=Hola,%20quisiera%20consultar%20sobre%20Balanzas%20de%20Precisión',
+    icon: 'bi-sliders',
   },
   {
     id: 'sistemas',
@@ -94,9 +94,9 @@ export const PRODUCTS: Product[] = [
     description:
       'Alternativas para integrar el pesaje a diferentes puestos y procesos de trabajo.',
     items: ['Plataformas de pesaje', 'Sistemas para procesos', 'Integración y soporte técnico'],
-    cta: 'Ver productos',
-    href: '/productos#sistemas',
-    icon: 'bi-board',
+    cta: 'Consultar por este equipo',
+    href: 'https://wa.me/2613463459?text=Hola,%20quisiera%20consultar%20sobre%20Plataformas%20y%20Sistemas%20de%20Pesaje',
+    icon: 'bi-layers',
   },
   {
     id: 'accesorios',
@@ -104,10 +104,10 @@ export const PRODUCTS: Product[] = [
     title: 'Indicadores y accesorios',
     description:
       'Componentes y accesorios para complementar, actualizar o mantener sistemas de pesaje.',
-    items: ['Indicadores', 'Componentes', 'Accesorios para pesaje'],
-    cta: 'Ver productos',
-    href: '/productos#accesorios',
-    icon: 'bi-monitor',
+    items: ['Indicadores digital', 'Componentes de repuesto', 'Accesorios para pesaje'],
+    cta: 'Consultar por este equipo',
+    href: 'https://wa.me/2613463459?text=Hola,%20quisiera%20consultar%20sobre%20Indicadores%20y%20Accesorios',
+    icon: 'bi-display',
   },
   {
     id: 'insumos',
@@ -115,9 +115,9 @@ export const PRODUCTS: Product[] = [
     title: 'Insumos para pesaje',
     description: 'Insumos y elementos de apoyo para el funcionamiento cotidiano de los equipos.',
     items: ['Insumos industriales', 'Elementos de mantenimiento', 'Asesoramiento técnico'],
-    cta: 'Ver productos',
-    href: '/productos#insumos',
-    icon: 'bi-cube',
+    cta: 'Consultar por este equipo',
+    href: 'https://wa.me/2613463459?text=Hola,%20quisiera%20consultar%20sobre%20Insumos%20para%20Pesaje',
+    icon: 'bi-box-seam',
   },
   {
     id: 'consulta',
@@ -125,11 +125,11 @@ export const PRODUCTS: Product[] = [
     title: '¿Buscás un equipo específico?',
     description:
       'Contanos qué necesitás y te asesoramos para encontrar una solución adecuada a tu aplicación.',
-    items: ['Asesoramiento personalizado', 'Venta y reparación', 'Servicio técnico'],
+    items: ['Asesoramiento personalizado', 'Venta y reparación', 'Servicio técnico especializado'],
     highlight: true,
-    cta: 'Consultar ahora',
-    href: '/#contacto',
-    icon: 'bi-search',
+    cta: 'Asesoramiento personalizado',
+    href: 'https://wa.me/2613463459?text=Hola,%20busco%20un%20equipo%20específico%20y%20necesito%20asesoramiento',
+    icon: 'bi-headset',
   },
 ];
 
